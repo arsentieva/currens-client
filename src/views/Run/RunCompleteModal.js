@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Modal } from '@material-ui/core';
+import { Button, Modal, Paper, Typography, Divider } from '@material-ui/core';
 import { CurrensContext } from "../../CurrensContext";
 import { apiBaseUrl } from "../../config";
 
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(true);
     const { authToken } = useContext( CurrensContext);
+    const [distance] = useState(JSON.parse(window.localStorage.getItem("currens-distance")));
 
 
     const handleClose = () => {
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
       const handleSubmitRun = async () => {
         //   TODO post the values
-        let distance = JSON.parse(window.localStorage.getItem("currens-distance"));
         window.localStorage.removeItem("currens-distance");
         console.log(distance);
         activity.title = "Feel Free Run";
@@ -67,7 +67,14 @@ const useStyles = makeStyles((theme) => ({
 
       const body = (
         <div style={modalStyle} className={classes.paper}>
-          <Button onClick={handleSubmitRun} >Save</Button>
+          <Paper>
+              <Typography variant="h3" color="secondary"> Nicely Done!</Typography>
+              <Divider/>
+              <Typography variant="subtitle1"> Today's activity summary:</Typography>
+              <Typography variant="body1">Distance: 5km </Typography>
+              <Typography variant="body1">Time: 00:25 min</Typography>
+            <Button onClick={handleSubmitRun} >Save</Button>
+          </Paper>
         </div>
       );
 

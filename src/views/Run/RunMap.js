@@ -173,7 +173,6 @@ function storeCoords(position) {
     }
     watchID = null;
     let pathRun = JSON.parse(window.localStorage.getItem("currens-run-route"));
-
     window.localStorage.removeItem("currens-run-route");
 
     setPath(pathRun);
@@ -203,7 +202,6 @@ function storeCoords(position) {
   }
 
   const handleSetGoal = () => {
-    console.log("invoked goal set");
     setGoal(true);
     handleGearClose();
   }
@@ -249,16 +247,16 @@ function storeCoords(position) {
                   }}
                 />
                 { path.length>=2 ?
-                <Polyline onLoad={onPolylineLoad} path={path} options={
-                  { clickable: false,
-                    draggable: false,
-                    editable: false,
-                    visible: true,
-                    strokeColor: colors.orange["A700"],
-                    strokeWeight: 12,
-                    fillColor: "#393",
-                    zIndex: 1
-                  } }/>
+                  <Polyline onLoad={onPolylineLoad} path={path} options={
+                    { clickable: false,
+                      draggable: false,
+                      editable: false,
+                      visible: true,
+                      strokeColor: colors.orange["A700"],
+                      strokeWeight: 12,
+                      fillColor: "#393",
+                      zIndex: 1
+                    } }/>
                   : null
                 }
 
