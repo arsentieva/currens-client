@@ -141,31 +141,29 @@ let runRoute=[];
 
 getCurrentPosition();
 
-  function storeCoords(position) {
-    let currentPath = {
-      lat : position.coords.latitude,
-      lng : position.coords.longitude
-    }
+function storeCoords(position) {
+      lat = position.coords.latitude,
+      lng = position.coords.longitude
 
     let previousCoord = runRoute[runRoute.length-1];
-    if(previousCoord !== undefined && (previousCoord.lat === currentPath.lat && previousCoord.lng === currentPath.lng))
+    if(previousCoord !== undefined && (previousCoord.lat === lat && previousCoord.lng === lng))
     {
       return;
     }
 
-    runRoute.push(currentPath);
+    runRoute.push({lat, lng});
     window.localStorage.setItem("currens-run-route", JSON.stringify(runRoute));
-  }
+}
 
   const handleStartRun = () => {
     setStartTime(getCurrentTimeFormatted());
     setStarted(true);
-    panTo({lat, lng});
     watchID = navigator.geolocation.watchPosition(storeCoords, geo_error, {
       maximumAge: 1000,
       timeout: 30000,
       enableHighAccuracy: true
     });
+    panTo({lat, lng});
   }
 
   const handleStopRun = () => {
