@@ -4,6 +4,10 @@
   "licence": "",
   "version": "1.0.0",
   "private": false,
+  "engines": {
+    "node": "12.18.3",
+    "npm": "6.14.6"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
