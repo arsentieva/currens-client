@@ -69,8 +69,6 @@ let watchID;
 // TODO do i want to show the real location
 
 export const RunMap = () => {
-  // const { isProfileComplete } = useContext( CurrensContext);
-  // const [status]=useState(!isProfileComplete);
   const [goal, setGoal] = useState(false);
   const [path, setPath] = useState([{lat, lng}]);
   const [started, setStarted] = useState(false);
@@ -159,7 +157,7 @@ getCurrentPosition();
   }
 
   const handleStartRun = () => {
-    setStartTime(new Date().toISOString().slice(0, 10) + " " + new Date().toISOString().slice(11, 19));
+    setStartTime(getCurrentTimeFormatted());
     setStarted(true);
     panTo({lat, lng});
     watchID = navigator.geolocation.watchPosition(storeCoords, geo_error, {
@@ -182,11 +180,16 @@ getCurrentPosition();
 
     setActivity({
       start_time: startTime,
-      end_time: new Date().toISOString().slice(0, 10) + " " + new Date().toISOString().slice(11, 19),
+      end_time: getCurrentTimeFormatted(),
       distance: "5000",
       route: {
         path: pathRun }
     });
+  }
+
+  const getCurrentTimeFormatted = () => {
+    let currentTime =new Date().toISOString();
+    return currentTime .slice(0, 10) + " " + currentTime.slice(11, 19);
   }
 
   const handleGearSelect = (event) =>
