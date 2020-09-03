@@ -69,15 +69,15 @@ let watchID;
 // TODO do i want to show the real location
 
 export const RunMap = () => {
-  const { isProfileComplete } = useContext( CurrensContext);
-  const [status]=useState(!isProfileComplete);
+  // const { isProfileComplete } = useContext( CurrensContext);
+  // const [status]=useState(!isProfileComplete);
   const [goal, setGoal] = useState(false);
   const [path, setPath] = useState([{lat, lng}]);
   const [started, setStarted] = useState(false);
   const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [completeRun, setCompleteRun] = useState(false);
+  const [activity, setActivity] = useState();
   const open = Boolean(anchorEl);
   const classes = useStyles();
   const mapRef = useRef();
@@ -159,7 +159,7 @@ getCurrentPosition();
   }
 
   const handleStartRun = () => {
-    setStartTime(Date.now());
+    setStartTime(new Date().toISOString().slice(0, 10) + " " + new Date().toISOString().slice(11, 19));
     setStarted(true);
     panTo({lat, lng});
     watchID = navigator.geolocation.watchPosition(storeCoords, geo_error, {
@@ -170,16 +170,23 @@ getCurrentPosition();
   }
 
   const handleStopRun = () => {
-    setEndTime(Date.now());
     setStarted(false);
     if(watchID){
       navigator.geolocation.clearWatch(watchID);
     }
     watchID = null;
-    let pathRun = window.localStorage.getItem("currens-run-route");
+    let pathRun = JSON.parse(window.localStorage.getItem("currens-run-route"));
     window.localStorage.removeItem("currens-run-route");
     setPath(pathRun);
     setCompleteRun(true);
+
+    setActivity({
+      start_time: startTime,
+      end_time: new Date().toISOString().slice(0, 10) + " " + new Date().toISOString().slice(11, 19),
+      distance: "5000",
+      route: {
+        path: pathRun }
+    });
   }
 
   const handleGearSelect = (event) =>
@@ -204,7 +211,7 @@ getCurrentPosition();
 
   return (
     <div> { console.log(completeRun) }
-     { completeRun ? <RunCompleteModal /> : null }
+     { completeRun ? <RunCompleteModal activity={activity} /> : null }
       <Grid container>
         <Grid item  lg={1} sm={1} xl={1} xs={1} />
         <Grid lg={10} sm={10} xl={10} xs={10}>

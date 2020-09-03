@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-  export default function RunCompleteModal ( ) {
+  export default function RunCompleteModal ( {activity} ) {
     const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = useState(getModalStyle);
@@ -38,13 +38,17 @@ const useStyles = makeStyles((theme) => ({
         setOpen(false);
       };
 
-      const handleSubmitRun = async (values) => {
+      const handleSubmitRun = async () => {
         //   TODO post the values
-        console.log(values);
+        activity.title = "Feel Free Run";
+        activity.type = "Run";
+        
+
+        console.log(activity);
         try {
             const res = await fetch(`${apiBaseUrl}/activities/`, { // the final "/" is important because without it CORS is not happy
               method: "POST",
-              body: JSON.stringify(values),
+              body: JSON.stringify(activity),
               headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` },
             });
             if (!res.ok) {
