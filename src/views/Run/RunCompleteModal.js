@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Modal, Paper, Typography, Divider } from '@material-ui/core';
 import { CurrensContext } from "../../CurrensContext";
 import { apiBaseUrl } from "../../config";
+import StepperWithIcons from "./StepperWithIcons";
 
 function getModalStyle() {
     const top = 50;
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
       width: 400,
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(2, 4, 3),
+
     },
   }));
 
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
             }
             await res.json();
             setOpen(false);
+
           } catch (error) {
             console.log(error);
           }
@@ -67,14 +70,9 @@ const useStyles = makeStyles((theme) => ({
 
       const body = (
         <div style={modalStyle} className={classes.paper}>
-          <Paper>
-              <Typography variant="h3" color="secondary"> Nicely Done!</Typography>
-              <Divider/>
-              <Typography variant="subtitle1"> Today's activity summary:</Typography>
-              <Typography variant="body1">Distance: 5km </Typography>
-              <Typography variant="body1">Time: 00:25 min</Typography>
-            <Button onClick={handleSubmitRun} >Save</Button>
-          </Paper>
+
+            <StepperWithIcons />
+         
         </div>
       );
 
