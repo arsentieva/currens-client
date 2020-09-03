@@ -1,19 +1,14 @@
 /* eslint-disable */
 
 import React, {useRef, useCallback, useContext, useState } from 'react';
-import { Grid, Card, CardActionArea, CardContent,  CardHeader, Button } from '@material-ui/core';
+import { Grid, Card, CardActionArea, CardContent,  CardHeader, Button, colors, Menu, MenuItem, IconButton } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
-import MyModal from "../../Modal";
 import RunCompleteModal from "./RunCompleteModal";
 import { CurrensContext } from "../../CurrensContext";
-import IconButton from '@material-ui/core/IconButton';
 import mapStyle from '../../mapStyle';
 import { GoogleMap, useLoadScript, Marker, Polyline } from '@react-google-maps/api';
 import SettingsIcon from '@material-ui/icons/Settings';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import StopIcon from '@material-ui/icons/Stop';
 import { withStyles } from '@material-ui/styles';
@@ -83,7 +78,13 @@ export const RunMap = () => {
   const panTo = useCallback(({lat, lng, zoom = 16})=> {
     mapRef.current.panTo({lat, lng})
     mapRef.current.setZoom(zoom);
-  }, [])
+  }, []);
+
+
+  const onPolylineLoad = polyline => {
+    let distanceCalculated = google.maps.geometry.spherical.computeLength(polyline.getPath());
+    window.localStorage.setItem("currens-distance", JSON.stringify(distanceCalculated));
+  };
 
 const options = {
   styles: mapStyle,
@@ -93,7 +94,7 @@ const containerStyle = {
   width: '100vw',
   height: '80vh'
 };
-const libraries = ['places'];
+const libraries = ['places', 'geometry'];
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -174,22 +175,24 @@ getCurrentPosition();
     }
     watchID = null;
     let pathRun = JSON.parse(window.localStorage.getItem("currens-run-route"));
+
     window.localStorage.removeItem("currens-run-route");
+
     setPath(pathRun);
     setCompleteRun(true);
 
     setActivity({
       start_time: startTime,
       end_time: getCurrentTimeFormatted(),
-      distance: "5000",
       route: {
         path: pathRun }
     });
   }
 
   const getCurrentTimeFormatted = () => {
-    let currentTime =new Date().toISOString();
-    return currentTime .slice(0, 10) + " " + currentTime.slice(11, 19);
+    // TODO fix the date to be local time and not ISO
+    let currentTime = new Date().toISOString();
+    return currentTime.slice(0, 10) + " " + currentTime.slice(11, 19);
   }
 
   const handleGearSelect = (event) =>
@@ -213,7 +216,7 @@ getCurrentPosition();
 
 
   return (
-    <div> { console.log(completeRun) }
+    <div>
      { completeRun ? <RunCompleteModal activity={activity} /> : null }
       <Grid container>
         <Grid item  lg={1} sm={1} xl={1} xs={1} />
@@ -247,6 +250,19 @@ getCurrentPosition();
                     anchor: new window.google.maps.Point(20, 20),
                   }}
                 />
+                { path.length>=2 ?
+                <Polyline onLoad={onPolylineLoad} path={path} options={
+                  { clickable: false,
+                    draggable: false,
+                    editable: false,
+                    visible: true,
+                    strokeColor: colors.orange["A700"],
+                    strokeWeight: 12,
+                    fillColor: "#393",
+                    zIndex: 1
+                  } }/>
+                  : null
+                }
 
             </GoogleMap>
             <CardContent className = {classes.content}>

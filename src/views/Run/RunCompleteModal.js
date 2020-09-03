@@ -40,9 +40,13 @@ const useStyles = makeStyles((theme) => ({
 
       const handleSubmitRun = async () => {
         //   TODO post the values
+        let distance = JSON.parse(window.localStorage.getItem("currens-distance"));
+        window.localStorage.removeItem("currens-distance");
+        console.log(distance);
         activity.title = "Feel Free Run";
         activity.type = "Run";
-        
+        activity.distance = distance;
+
 
         console.log(activity);
         try {
