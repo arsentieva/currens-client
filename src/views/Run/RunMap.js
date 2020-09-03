@@ -5,6 +5,7 @@ import { Grid, Card, CardActionArea, CardContent,  CardHeader, Button } from '@m
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import MyModal from "../../Modal";
+import RunCompleteModal from "./RunCompleteModal";
 import { CurrensContext } from "../../CurrensContext";
 import IconButton from '@material-ui/core/IconButton';
 import mapStyle from '../../mapStyle';
@@ -75,7 +76,8 @@ export const RunMap = () => {
   const [started, setStarted] = useState(false);
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
-  const [anchorEl, setAnchorEl] = useState( null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [completeRun, setCompleteRun] = useState(false);
   const open = Boolean(anchorEl);
   const classes = useStyles();
   const mapRef = useRef();
@@ -145,15 +147,15 @@ getCurrentPosition();
       lat : position.coords.latitude,
       lng : position.coords.longitude
     }
-    // debugger;
-    console.log("path before", path);
-    console.log("currentPath :" , currentPath);
+
+    let previousCoord = runRoute[runRoute.length-1];
+    if(previousCoord !== undefined && (previousCoord.lat === currentPath.lat && previousCoord.lng === currentPath.lng))
+    {
+      return;
+    }
+
     runRoute.push(currentPath);
-    console.log(runRoute);
     window.localStorage.setItem("currens-run-route", JSON.stringify(runRoute));
-    setPath([...path, currentPath]);
-    console.log("path after : ", path);
-    // debugger;
   }
 
   const handleStartRun = () => {
@@ -174,6 +176,10 @@ getCurrentPosition();
       navigator.geolocation.clearWatch(watchID);
     }
     watchID = null;
+    let pathRun = window.localStorage.getItem("currens-run-route");
+    window.localStorage.removeItem("currens-run-route");
+    setPath(pathRun);
+    setCompleteRun(true);
   }
 
   const handleGearSelect = (event) =>
@@ -197,8 +203,8 @@ getCurrentPosition();
 
 
   return (
-    <div>
-      <MyModal opened={status} />
+    <div> { console.log(completeRun) }
+     { completeRun ? <RunCompleteModal /> : null }
       <Grid container>
         <Grid item  lg={1} sm={1} xl={1} xs={1} />
         <Grid lg={10} sm={10} xl={10} xs={10}>
