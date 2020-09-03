@@ -16,14 +16,13 @@ function getModalStyle() {
     };
   }
 
-
 const useStyles = makeStyles((theme) => ({
     paper: {
       position: 'absolute',
-      width: 400,
+      width: 700,
+      height: 400,
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(2, 4, 3),
-
     },
   }));
 
@@ -35,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     const [open, setOpen] = useState(true);
     const { authToken } = useContext( CurrensContext);
     const [distance] = useState(JSON.parse(window.localStorage.getItem("currens-distance")));
-
 
     const handleClose = () => {
         setOpen(false);
@@ -70,16 +68,14 @@ const useStyles = makeStyles((theme) => ({
 
       const body = (
         <div style={modalStyle} className={classes.paper}>
-
-            <StepperWithIcons />
-         
+          <StepperWithIcons />
         </div>
       );
 
       return (
-            <Modal open={open} onClose={handleClose} >
-                {body}
-            </Modal>
+        <Modal open={open} onClose={handleClose} >
+          {body}
+        </Modal>
       );
 
   };

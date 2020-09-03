@@ -112,16 +112,6 @@ const useColorlibStepIconStyles = makeStyles({
   },
 });
 
-// background-color: #0499f2;
-// background-image: linear-gradient(315deg, #0499f2 0%, #26f596 74%);
-// background-color #ff4e00;
-// background-image linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
-// background-color #55efc4;
-// background-image linear-gradient(315deg, #55efc4 0%, #000000 74%);
-// background-color: #f42b03;
-// background-image: linear-gradient(316deg, #f42b03 0%, #ffbe0b 74%);
-
-
 function ColorlibStepIcon(props) {
   const classes = useColorlibStepIconStyles();
   const { active, completed } = props;
