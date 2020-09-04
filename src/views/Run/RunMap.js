@@ -14,6 +14,7 @@ import StopIcon from '@material-ui/icons/Stop';
 import { withStyles } from '@material-ui/styles';
 import SetGoalModal from "./SetGoalModal";
 import Timer from "./Timer";
+import MyModal from 'src/Modal';
 
 const useStyles = makeStyles((theme) => ({
   card : {
@@ -64,6 +65,8 @@ let watchID;
 // TODO do i want to show the real location
 
 export const RunMap = () => {
+  const { isProfileComplete } = useContext( CurrensContext);
+  const [status]=useState(!isProfileComplete);
   const [goal, setGoal] = useState(false);
   const [path, setPath] = useState([{lat, lng}]);
   const [started, setStarted] = useState(false);
@@ -213,6 +216,7 @@ function storeCoords(position) {
 
   return (
     <div>
+      <MyModal opened = {status} />
      { completeRun ? <RunCompleteModal activity={activity} /> : null }
       <Grid container>
         <Grid item  lg={1} sm={1} xl={1} xs={1} />
