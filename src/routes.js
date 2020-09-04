@@ -4,6 +4,7 @@ import PrimaryLayout from 'src/layouts/PrimaryLayout';
 import UnauthLayout from 'src/layouts/UnauthLayout';
 import AccountView from 'src/views/account/AccountView';
 import MasterView from 'src/views/reports/MasterView';
+import HomeView from "src/views/Home/HomeView"
 import RunView from "src/views/Run/Run";
 import ActivityView from "src/views/Activity/Activity";
 import ActivitiesView from "src/views/Activities/Activities";
@@ -30,10 +31,12 @@ const routes = [
     path: '/',
     element: <UnauthLayout />,
     children: [
+      { path: 'home', element: <HomeView /> },
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
       { path: '404', element: <NotFoundView /> },
-      { path: '/', element: <Navigate to="/app/run" /> },
+      { path: '/', element: <Navigate to="/home" /> },
+      // { path: '/', element: <Navigate to="/app/run" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }

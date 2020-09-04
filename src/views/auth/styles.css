@@ -1,0 +1,61 @@
+html {
+    box-sizing: border-box;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    background-color: #009688;
+  }
+
+  body,
+  html,
+  #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  #root > div > svg {
+    width: 300px;
+  }
+
+  .runner {
+    margin-top: 9%;
+    background: url(./rsz_runningman.png);
+    width: calc(2500px / 10);
+    height:350px;
+    animation: walk 1s steps(10) infinite,
+               forward 10s linear infinite;
+}
+
+@keyframes walk{
+    from {
+        background-position: 0;
+    }
+    to{
+        background-position: -2500px;
+    }
+}
+
+@keyframes forward {
+    0% {
+        transform:  translateX(0px);
+    }
+    100% {
+        transform:  translateX(88vw);
+    }
+}

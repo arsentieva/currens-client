@@ -10,6 +10,8 @@ import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
 import { CurrensContext } from "../../CurrensContext";
 import { apiBaseUrl } from "../../config";
+import './styles.css'
+import runner from "./rsz_runningman.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -145,6 +147,8 @@ const LoginView = (props) => {
             )}
           </Formik>
         </Container>
+        <div className="runner"></div>
+     
       </Box>
     </Page>
   );
