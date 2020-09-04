@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -10,6 +10,8 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import { CurrensContext } from "../../CurrensContext";
+import { apiBaseUrl } from "../../config";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -175,8 +177,9 @@ function getStepContent(step) {
   }
 }
 
-export default function StepperWithIcons() {
+export default function StepperWithIcons({activity}) {
   const classes = useStyles();
+  const { authToken } = useContext( CurrensContext);
   const [activeStep, setActiveStep] = useState(0);
   const [title, setTitle] = useState();
   const [rating, setRating] = useState();
@@ -184,8 +187,41 @@ export default function StepperWithIcons() {
   const steps = getSteps();
 
   const handleNext = () => {
+    console.log("active step:", activeStep)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === steps.length-1){
+      handleSubmitRun();
+    }
   };
+
+  const handleSubmitRun = async () => {
+    //   TODO post the values
+    let distance =JSON.parse(window.localStorage.getItem("currens-distance"));
+    console.log(distance);
+
+    activity.title = title;
+    activity.effort_level = rating;
+    activity.type = "Run";
+    activity.distance = distance;
+
+    console.log(activity);
+    try {
+      const res = await fetch(`${apiBaseUrl}/activities/`, { // the end "/" is important because without it CORS is not happy
+      method: "POST",
+      body: JSON.stringify(activity),
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` },
+    });
+    if (!res.ok) {
+      throw res;
+    }
+        await res.json();
+        window.localStorage.removeItem("currens-distance");
+
+      } catch (error) {
+        console.log(error);
+      }
+  };
+
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
