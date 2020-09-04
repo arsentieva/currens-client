@@ -20,14 +20,12 @@ html {
     padding: 0;
   }
 
-  #root > div {
+  /* #roots > div {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
+
+  } */
 
   #root > div > svg {
     width: 300px;
