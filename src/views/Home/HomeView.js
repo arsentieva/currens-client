@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, useTrail } from 'react-spring';
 import { useNavigate } from 'react-router-dom';
 import { CurrensContext } from "../../CurrensContext";
+import "./styles.css";
+
 
 const AnimFeTurbulence = animated('feTurbulence')
 const AnimFeDisplacementMap = animated('feDisplacementMap')
@@ -19,6 +21,17 @@ const HomeView = (props) => {
       config: { duration: 3000 }
     })
 
+    const items = ['Currens']
+    const config = { mass: 5, tension: 2000, friction: 200 }
+    const [toggles, set] = useState(true)
+    const trail = useTrail(items.length, {
+      config,
+      opacity: toggles ? 1 : 0,
+      x: toggles ? 0 : 20,
+      height: toggles ? 80 : 0,
+      from: { opacity: 0, x: 20, height: 0 },
+    })
+
     const handleClick = () => {
       if (!authToken) {
         navigate("/login");
@@ -28,6 +41,7 @@ const HomeView = (props) => {
     }
 
     return (
+      <div>
       <div onClick={handleClick} style={{ width: "50vw", height: "50vh", margin: "auto"} }>
         <animated.svg style={{ transform, opacity }} viewBox="0 0 1278 446">
           <defs>
@@ -44,6 +58,19 @@ const HomeView = (props) => {
           </g>
         </animated.svg>
       </div>
+      <div className="trails-main" onClick={() => set(state => !state)}>
+      <div>
+        {trail.map(({ x, height, ...rest }, index) => (
+          <animated.div
+            key={items[index]}
+            className="trails-text"
+            style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}>
+            <animated.div style={{ height }}>{items[index]}</animated.div>
+          </animated.div>
+        ))}
+      </div>
+    </div>
+    </div>
     )
   };
 
