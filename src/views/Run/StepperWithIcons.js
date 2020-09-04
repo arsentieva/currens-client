@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
-import {Button, TextField, Typography, Stepper, Step, StepLabel, StepConnector, Box } from '@material-ui/core';
+import {Button, TextField, Typography, Stepper, Step, StepLabel, StepConnector, Box, Grid } from '@material-ui/core';
 import Check from '@material-ui/icons/Check';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
@@ -194,9 +194,10 @@ export default function StepperWithIcons({activity}) {
     }
   };
 
+  let distance = 0 ;
   const handleSubmitRun = async () => {
     //   TODO post the values
-    let distance =JSON.parse(window.localStorage.getItem("currens-distance"));
+    distance =JSON.parse(window.localStorage.getItem("currens-distance"));
     console.log(distance);
 
     activity.title = title;
@@ -222,7 +223,6 @@ export default function StepperWithIcons({activity}) {
       }
   };
 
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -238,27 +238,29 @@ export default function StepperWithIcons({activity}) {
       </Stepper>
       <div>
         {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions} color="primary">
+          <Box mb={3}>
+            <Typography align="center" className={classes.instructions} color="primary">
               Enjoy your day!
             </Typography>
-          </div>
+          </Box>
         ) : (
-          <div>
-            <Typography className={classes.instructions} >{getStepContent(activeStep)}</Typography>
+         <Box mb={3}>
+            <Typography align="center" className={classes.instructions} >{getStepContent(activeStep)}</Typography>
             {
               activeStep === 0 ?
-                <Box >
-                  <Typography variant="body1">Distance: 5km </Typography>
-                  <Typography variant="body1">Time: 00:25 min</Typography>
+                <Box mb={3}>
+                  <Typography align="center" variant="body1">Distance </Typography>
+                  <Typography align="center" color="textSecondary" gutterBottom variant="body2"> 5.45 KM </Typography>
+                  <Typography align="center" variant="body1">Time </Typography>
+                  <Typography align="center" color="textSecondary" gutterBottom variant="body2"> 00:25 min</Typography>
                 </Box>
                :
                activeStep  === 1 ?
-                <Box>
+                <Box mb={3}>
                   <TextField fullWidth onChange={(event)=> setTitle(event.target.value)} value={title}/>
                 </Box> :
                 activeStep === 2 ?
-                <Box component="fieldset" mb={3} borderColor="transparent">
+                <Box component="fieldset" mb={3} borderColor="transparent" marginLeft={20}>
                   <StyledRating
                     name="customized-color"
                     size="large"
@@ -268,18 +270,24 @@ export default function StepperWithIcons({activity}) {
                     onChange={(event, value)=>  setRating(value)}
                   />
                 </Box>  :
-                activeStep === 3 ? "" : null
+                activeStep === 3 ? <Box mb={3}> &nbsp;&nbsp;</Box> : null
             }
 
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+           <Box mb={3} my={2}>
+            <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Button disabled={activeStep === 0} color="secondary" onClick={handleBack} className={classes.button} fullWidth size="large">
                 Back
               </Button>
-              <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Button variant="contained" color="primary" onClick={handleNext} className={classes.button} fullWidth size="large">
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
-            </div>
-          </div>
+            </Grid>
+           </Grid>
+          </Box>
+          </Box>
         )}
       </div>
     </div>
