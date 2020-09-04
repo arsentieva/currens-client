@@ -179,6 +179,7 @@ export default function StepperWithIcons() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [title, setTitle] = useState();
+  const [rating, setRating] = useState();
 
   const steps = getSteps();
 
@@ -218,15 +219,17 @@ export default function StepperWithIcons() {
                :
                activeStep  === 1 ?
                 <Box>
-                  <TextField onChange={(event)=> setTitle(event.target.value)} value={title}/>
+                  <TextField fullWidth onChange={(event)=> setTitle(event.target.value)} value={title}/>
                 </Box> :
                 activeStep === 2 ?
                 <Box component="fieldset" mb={3} borderColor="transparent">
                   <StyledRating
                     name="customized-color"
+                    size="large"
                     defaultValue={5} max ={10}
-                    getLabelText={(value) => `${value} Effort${value !== 1 ? 's' : ''}`}
                     icon={<FitnessCenterIcon fontSize="inherit" />}
+                    value={rating}
+                    onChange={(event, value)=>  setRating(value)}
                   />
                 </Box>  :
                 activeStep === 3 ? "" : null
