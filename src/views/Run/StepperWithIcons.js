@@ -175,41 +175,11 @@ function getStepContent(step) {
   }
 }
 
-function getStepComponents(step) {
-  switch (step) {
-    case 0:
-      return (
-        <Box >
-          <Typography variant="body1">Distance: 5km </Typography>
-          <Typography variant="body1">Time: 00:25 min</Typography>
-        </Box>
-      );
-
-    case 1:
-      return (
-        <Box>
-          <TextField />
-        </Box>
-      );
-    case 2:
-      return (
-        <Box component="fieldset" mb={3} borderColor="transparent">
-          <StyledRating
-            name="customized-color"
-            defaultValue={5} max = {10}
-            getLabelText={(value) => `${value} Effort${value !== 1 ? 's' : ''}`}
-            icon={<FitnessCenterIcon fontSize="inherit" />}
-          />
-        </Box>
-      );
-    default:
-      return '';
-  }
-}
-
 export default function StepperWithIcons() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const [title, setTitle] = useState();
+
   const steps = getSteps();
 
   const handleNext = () => {
@@ -218,10 +188,6 @@ export default function StepperWithIcons() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   return (
@@ -243,7 +209,29 @@ export default function StepperWithIcons() {
         ) : (
           <div>
             <Typography className={classes.instructions} >{getStepContent(activeStep)}</Typography>
-            {getStepComponents(activeStep)}
+            {
+              activeStep === 0 ?
+                <Box >
+                  <Typography variant="body1">Distance: 5km </Typography>
+                  <Typography variant="body1">Time: 00:25 min</Typography>
+                </Box>
+               :
+               activeStep  === 1 ?
+                <Box>
+                  <TextField onChange={(event)=> setTitle(event.target.value)} value={title}/>
+                </Box> :
+                activeStep === 2 ?
+                <Box component="fieldset" mb={3} borderColor="transparent">
+                  <StyledRating
+                    name="customized-color"
+                    defaultValue={5} max ={10}
+                    getLabelText={(value) => `${value} Effort${value !== 1 ? 's' : ''}`}
+                    icon={<FitnessCenterIcon fontSize="inherit" />}
+                  />
+                </Box>  :
+                activeStep === 3 ? "" : null
+            }
+
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back

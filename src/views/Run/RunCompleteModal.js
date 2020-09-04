@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Modal, Paper, Typography, Divider } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import { CurrensContext } from "../../CurrensContext";
 import { apiBaseUrl } from "../../config";
 import StepperWithIcons from "./StepperWithIcons";
