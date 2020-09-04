@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useNavigate } from 'react-router-dom';
 import { CurrensContext } from "../../CurrensContext";
-import './styles.css';
-
 
 const AnimFeTurbulence = animated('feTurbulence')
 const AnimFeDisplacementMap = animated('feDisplacementMap')
@@ -25,12 +23,12 @@ const HomeView = (props) => {
       if (!authToken) {
         navigate("/login");
      } else {
-       navigate("app/run")
+       navigate("/app/run")
      }
     }
 
     return (
-      <div onClick={handleClick}>
+      <div onClick={handleClick} style={{ width: "50vw", height: "50vh", margin: "auto"} }>
         <animated.svg style={{ transform, opacity }} viewBox="0 0 1278 446">
           <defs>
             <filter id="water">
