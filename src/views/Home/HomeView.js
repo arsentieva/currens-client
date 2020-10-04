@@ -2,14 +2,40 @@ import React, { useState, useContext } from 'react';
 import { useSpring, animated, useTrail } from 'react-spring';
 import { useNavigate } from 'react-router-dom';
 import { CurrensContext } from "../../CurrensContext";
+import Slide from '@material-ui/core/Slide';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 import "./styles.css";
 
 const AnimFeTurbulence = animated('feTurbulence');
 const AnimFeDisplacementMap = animated('feDisplacementMap');
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
+
 
 const HomeView = (props) => {
   const { authToken } = useContext(CurrensContext);
   const navigate = useNavigate();
+
+  const [state, setState] = useState({
+    open: true,
+    Transition: Slide,
+  });
+
+  const handleLoad = (Transition) => () => {
+    setState({
+      open: true,
+      Transition,
+    });
+  };
+
+  const handleClose = () => {
+    setState({
+      ...state,
+      open: false,
+    });
+  };
 
     const [open, toggle] = useState(false);
     const { freq, scale, transform, opacity } = useSpring({
@@ -36,9 +62,21 @@ const HomeView = (props) => {
      } else {
        navigate("/app/run");
      }
+
+     const style = {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      borderRadius: 3,
+      border: 0,
+      color: 'white',
+      height: 48,
+      padding: '0 30px',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    };
+
     };
     return (
-          <div>
+
+          <div onClick={handleClick} onLoad={handleLoad(SlideTransition)}>
             <div onClick={handleClick} style={{ width: "50vw", height: "50vh", margin: "auto", marginTop: 130 }}>
               <animated.svg style={{ transform, opacity }} viewBox="0 0 1278 446">
                 <defs>
@@ -67,6 +105,7 @@ const HomeView = (props) => {
             ))}
           </div>
           </div>
+          <Snackbar open={state.open} onClose={handleClose} TransitionComponent={state.Transition} message="Click anywhere to start..." key={state.Transition.name}/>
           </div>
        );
   };
