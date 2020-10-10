@@ -26,7 +26,8 @@ const Facebook = () => {
   const componentClicked = () => console.log("clicked"); 
 
 return (
-        <FacebookLogin appId="673949476644535" autoLoad={true} fields="name,email,picture"  
+        <FacebookLogin appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+         autoLoad={true} fields="name,email,picture"  
         callback={responseFacebook} 
         render = {renderProps => (<Button color="primary" fullWidth startIcon={<FacebookIcon />} onClick={componentClicked} size="large" variant="contained">
         Login with Facebook
