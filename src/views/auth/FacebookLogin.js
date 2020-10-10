@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Button, Typography } from '@material-ui/core';
+import React, { useState, } from "react";
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import FacebookIcon from 'src/icons/Facebook';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 const Facebook = () => {
   const [facebookState, setFacebookState] = useState({
@@ -11,6 +12,8 @@ const Facebook = () => {
     email:"",
     picture: "",
   })
+
+  const navigate = useNavigate();
 
   const responseFacebook = response => {
     console.log('resp', response);
@@ -22,8 +25,12 @@ const Facebook = () => {
       picture: response.picture.data.url
     });
   };
-
-  const componentClicked = () => console.log("clicked"); 
+   
+  const componentClicked = () => {
+    if(facebookState.isLoggedIn) { 
+        navigate('/app/run');
+    }
+  }; 
 
 return (
         <FacebookLogin appId={process.env.REACT_APP_FACEBOOK_APP_ID}
