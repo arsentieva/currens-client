@@ -8,7 +8,6 @@ const Activity = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("auth: ", authToken);
     if (!authToken) {
        navigate("/login");
     }

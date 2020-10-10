@@ -53,7 +53,6 @@ export default function MyModal({ opened }) {
 
   const handleSubmitInfo = async (values) => {
     //   TODO post the values
-    console.log(values);
     try {
         const res = await fetch(`${apiBaseUrl}/users/`, { // the final "/" is important because without it CORS is not happy
           method: "PUT",

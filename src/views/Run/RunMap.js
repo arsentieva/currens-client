@@ -240,7 +240,7 @@ function storeCoords(position) {
             <GoogleMap mapContainerStyle={containerStyle} center={{ lat, lng }} zoom={3} options={options} onLoad={onMapLoad}
               onClick= { (event)=> {
               mypaths.push({lat: event.latLng.lat(), lng: event.latLng.lng()});
-              console.log(mypaths); }}>
+             }}>
                 <Marker
                   position={{ lat, lng }}
                   icon={{

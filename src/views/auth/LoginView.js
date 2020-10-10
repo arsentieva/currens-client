@@ -32,8 +32,7 @@ const validationSchema = Yup.object().shape({
      .required('Password is required')
 });
 
-const LoginView = (props) => {
-  const { history } = props;
+const LoginView = () => {
   const { authToken, login, loadUserProfile} = useContext(CurrensContext);
   const [error, setError] = useState(undefined);
  

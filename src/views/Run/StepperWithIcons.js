@@ -187,7 +187,6 @@ export default function StepperWithIcons({activity}) {
   const steps = getSteps();
 
   const handleNext = () => {
-    console.log("active step:", activeStep)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if (activeStep === steps.length-1){
       handleSubmitRun();
@@ -198,14 +197,12 @@ export default function StepperWithIcons({activity}) {
   const handleSubmitRun = async () => {
     //   TODO post the values
     distance =JSON.parse(window.localStorage.getItem("currens-distance"));
-    console.log(distance);
 
     activity.title = title;
     activity.effort_level = rating;
     activity.type = "Run";
     activity.distance = distance;
 
-    console.log(activity);
     try {
       const res = await fetch(`${apiBaseUrl}/activities/`, { // the end "/" is important because without it CORS is not happy
       method: "POST",

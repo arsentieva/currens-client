@@ -169,7 +169,7 @@ export const ActivityMap = () => {
             onLoad={onMapLoad}
             onClick={ (event)=> {
                 mypaths.push({lat: event.latLng.lat(), lng: event.latLng.lng()});
-                console.log(mypaths); }} >
+               }} >
              <Polyline onLoad={onPolylineLoad} path={path} options={
               { clickable: false,
                 draggable: false,
