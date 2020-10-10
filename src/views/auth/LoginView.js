@@ -1,17 +1,16 @@
 /* eslint-disable */
 import React, { useContext, useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import Facebook from "./FacebookLogin";
 import * as Yup from 'yup'; // schema builder for value parsing and validation
 import { Formik, Form } from 'formik'; // form builder package
 import { Box, Button, Container, Grid, Link, TextField, Typography, makeStyles } from '@material-ui/core';
 import { Alert } from "@material-ui/lab";
-import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
 import { CurrensContext } from "../../CurrensContext";
 import { apiBaseUrl } from "../../config";
 import './styles.css'
-import runner from "./rsz_runningman.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +36,7 @@ const LoginView = (props) => {
   const { history } = props;
   const { authToken, login, loadUserProfile} = useContext(CurrensContext);
   const [error, setError] = useState(undefined);
-
+ 
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -47,6 +46,7 @@ const LoginView = (props) => {
    }
   })
 
+ 
  const handleLogin = async (values, { setSubmitting, resetForm }) => {
     try{
       const res = await fetch(`${apiBaseUrl}/auth/login`, {
@@ -92,9 +92,7 @@ const LoginView = (props) => {
                 </Box>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
-                    <Button color="primary" fullWidth startIcon={<FacebookIcon />} onClick={handleSubmit} size="large" variant="contained">
-                      Login with Facebook
-                    </Button>
+                    <Facebook />
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Button fullWidth startIcon={<GoogleIcon />} onClick={handleSubmit} size="large" variant="contained">
