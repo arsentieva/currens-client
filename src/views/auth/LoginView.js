@@ -1,12 +1,10 @@
 /* eslint-disable */
 import React, { useContext, useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import Facebook from "./FacebookLogin";
 import * as Yup from 'yup'; // schema builder for value parsing and validation
 import { Formik, Form } from 'formik'; // form builder package
 import { Box, Button, Container, Grid, Link, TextField, Typography, makeStyles } from '@material-ui/core';
 import { Alert } from "@material-ui/lab";
-import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
 import { CurrensContext } from "../../CurrensContext";
 import { apiBaseUrl } from "../../config";
@@ -35,7 +33,7 @@ const validationSchema = Yup.object().shape({
 const LoginView = () => {
   const { authToken, login, loadUserProfile} = useContext(CurrensContext);
   const [error, setError] = useState(undefined);
- 
+
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -45,7 +43,7 @@ const LoginView = () => {
    }
   })
 
- 
+
  const handleLogin = async (values, { setSubmitting, resetForm }) => {
     try{
       const res = await fetch(`${apiBaseUrl}/auth/login`, {
@@ -84,23 +82,9 @@ const LoginView = () => {
               <Form onSubmit={handleSubmit}>
                 <Box mb={3}>
                 <Typography color="textPrimary" variant="h2"> Sign in </Typography>
-                  <Typography color="textSecondary" gutterBottom variant="body2"> Sign in on the internal platform </Typography>
                 </Box>
                 <Box mt={3} mb={1}>
                    { error !== undefined ? <Alert severity="error" onClose={() => { setError(undefined); }}>{ error }</Alert> : null }
-                </Box>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    <Facebook />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Button fullWidth startIcon={<GoogleIcon />} onClick={handleSubmit} size="large" variant="contained">
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Box mt={3} mb={1}>
-                  <Typography align="center" color="textSecondary" variant="body1"> or login with email address</Typography>
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
@@ -138,14 +122,12 @@ const LoginView = () => {
                   {' '}
                   <Link component={RouterLink} to="/register" variant="h6">Sign up</Link>
                 </Typography>
-                 {/* <pre> { JSON.stringify(errors, null, 4) }</pre>
-                 <pre> { JSON.stringify(values, null, 4) }</pre> */}
               </Form>
             )}
           </Formik>
         </Container>
         <div className="runner"></div>
-     
+
       </Box>
     </Page>
   );

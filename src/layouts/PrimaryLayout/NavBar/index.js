@@ -27,11 +27,12 @@ const items = [
     icon: BarChartIcon,
     title: 'Activities'
   },
-  {
-    href: '/app/challenges',
-    icon: ChallengeIcon,
-    title: 'Challenges'
-  },
+  //TODO
+  // {
+  //   href: '/app/challenges',
+  //   icon: ChallengeIcon,
+  //   title: 'Challenges'
+  // },
   {
     href: '/app/account',
     icon: UserIcon,

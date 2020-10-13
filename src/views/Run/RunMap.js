@@ -1,6 +1,5 @@
 /* eslint-disable */
-
-import React, {useRef, useCallback, useContext, useState } from 'react';
+import React, {useRef, useCallback, useContext, useState, useEffect } from 'react';
 import { Grid, Card, CardActionArea, CardContent,  CardHeader, Button, colors, Menu, MenuItem, IconButton } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -83,6 +82,9 @@ export const RunMap = () => {
     mapRef.current.setZoom(zoom);
   }, []);
 
+  useEffect (()=> {
+    getCurrentPosition();
+  }, []);
 
   const onPolylineLoad = polyline => {
     let distanceCalculated = google.maps.geometry.spherical.computeLength(polyline.getPath());
@@ -141,8 +143,6 @@ function getCurrentPosition() {
 }
 
 let runRoute=[];
-
-getCurrentPosition();
 
 function storeCoords(position) {
       lat = position.coords.latitude,
