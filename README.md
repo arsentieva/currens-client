@@ -1,9 +1,13 @@
-# CURRERNS Activity tracking app for a healthy and happy life.
+# CURRERNS 
+Activity tracking app for a healthy and happy life.
+
 
 
 # Links
 ### Live: [Currens](https://currens-client.herokuapp.com/home)
 ### Backend for app: [Currens backend repo](https://github.com/arsentieva/currens-server)
+
+
 
 # Technologies
 
