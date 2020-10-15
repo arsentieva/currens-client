@@ -1,9 +1,9 @@
-# currens
+# CURRERNS Activity tracking app for a healthy and happy life.
 
 
 # Links
-## Live: [Currens](https://currens-client.herokuapp.com/home)
-## Backend for app: [Currens backend repo](https://github.com/arsentieva/currens-server)
+### Live: [Currens](https://currens-client.herokuapp.com/home)
+### Backend for app: [Currens backend repo](https://github.com/arsentieva/currens-server)
 
 # Technologies
 
@@ -16,7 +16,7 @@
 - Back-end development
 	- Flask
 	- JWT access token
-  - Flask Rest X
+        - Flask Rest X
 	
 # Features
 - User Login/ Registration
