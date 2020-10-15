@@ -2,8 +2,8 @@
 
 
 # Links
-## Live [Currens](https://currens-client.herokuapp.com/home)
-## Backend for app here: [Currens backend repo] (https://github.com/arsentieva/currens-server)
+## Live: [Currens](https://currens-client.herokuapp.com/home)
+## Backend for app: [Currens backend repo](https://github.com/arsentieva/currens-server)
 
 # Technologies
 
